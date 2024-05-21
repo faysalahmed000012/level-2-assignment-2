@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { Product } from "../product/product.model";
 
 const OrderSchema = new Schema<TOrder>({
   email: {
@@ -23,6 +24,31 @@ const OrderSchema = new Schema<TOrder>({
     required: [true, "Order quantity is required"],
     min: [0, "Order quantity can not be 0 or negative"],
   },
+});
+
+// middleware for do not let order more than quantity
+OrderSchema.pre("save", async function (next) {
+  try {
+    const product = await Product.findOne({
+      _id: this.productId,
+    });
+    if ((product?.inventory.quantity as number) < this.quantity) {
+      next(new Error("You can not place order more than available quantity"));
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(new Error(`Could not find any product with id ${this.productId}`));
+  }
+});
+// // post middleware for updating product
+OrderSchema.post("save", async function (doc, next) {
+  const updateProduct = await Product.findOneAndUpdate(
+    { _id: doc.productId },
+    { $inc: { "inventory.quantity": -doc.quantity } },
+    { new: true }
+  );
+  next();
 });
 
 export const Order = model<TOrder>("orders", OrderSchema);

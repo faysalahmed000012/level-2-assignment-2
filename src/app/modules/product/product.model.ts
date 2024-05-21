@@ -46,4 +46,11 @@ const ProductSchema = new mongoose.Schema<TProduct>({
   },
 });
 
+ProductSchema.pre("save", function (next) {
+  if (this.inventory.quantity === 0) {
+    this.inventory.inStock = false;
+  }
+  next();
+});
+
 export const Product = model<TProduct>("products", ProductSchema);

@@ -43,17 +43,22 @@ const getProductById = async (req: Request, res: Response) => {
   try {
     const id = req.params.productId;
     const response = await ProductServices.getProductById(id);
-    res.status(200).json({
-      success: true,
-      message: "Product fetched successfully!",
-      data: response,
-    });
+    if (!response) {
+      res.status(500).json({
+        success: false,
+        message: `Product with ${id} does not exists`,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Product fetched successfully!",
+        data: response,
+      });
+    }
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:
-        error.issues[0].message ||
-        "Something went wrong while fetching product",
+      message: "Something went wrong while fetching product",
       error: error,
     });
   }

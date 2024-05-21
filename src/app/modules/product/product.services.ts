@@ -11,8 +11,13 @@ const getProducts = async (query: any = null) => {
 };
 
 const getProductById = async (id: string) => {
-  const response = await Product.findById({ _id: id });
+  const response = await Product.findOne({ _id: id });
   return response;
+  // if (response) {
+  //   return response;
+  // } else {
+  //   return null;
+  // }
 };
 
 const createNewProduct = async (product: TProduct) => {
