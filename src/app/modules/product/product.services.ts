@@ -1,7 +1,12 @@
 import { Product } from "./product.model";
 
-const getProducts = async () => {
-  const response = await Product.find().lean();
+const getProducts = async (query: any = null) => {
+  let response;
+  if (query) {
+    response = await Product.find({ $text: { $search: query } });
+  } else {
+    response = await Product.find().lean();
+  }
   return response;
 };
 

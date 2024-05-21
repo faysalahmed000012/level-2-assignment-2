@@ -4,12 +4,23 @@ import productValidation from "./product.zod.validation";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
-    const response = await ProductServices.getProducts();
-    res.status(200).json({
-      success: true,
-      message: "Products fetched successfully!",
-      data: response,
-    });
+    const query = req.query.searchTerm;
+    let response;
+    if (query) {
+      response = await ProductServices.getProducts(query);
+      res.status(200).json({
+        success: true,
+        message: `Products matching search term ${query} fetched successfully!`,
+        data: response,
+      });
+    } else {
+      response = await ProductServices.getProducts();
+      res.status(200).json({
+        success: true,
+        message: "Products fetched successfully!",
+        data: response,
+      });
+    }
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -117,4 +128,5 @@ export const ProductControllers = {
   addProduct,
   getProductById,
   updateProduct,
+  deleteProductById,
 };
