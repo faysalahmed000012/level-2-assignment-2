@@ -68,7 +68,7 @@ const addProduct = async (req: Request, res: Response) => {
 const updateProduct = async (req: Request, res: Response) => {
   try {
     const data = req.body;
-    const id = req.params.id;
+    const id = req.params.productId;
     // validate using zod
     const zodParsedData = productValidation.parse(data);
     const result = await ProductServices.updateExistingProduct(
@@ -86,6 +86,27 @@ const updateProduct = async (req: Request, res: Response) => {
       message:
         error.issues[0].message ||
         "Cannot update product, something went wrong",
+      error: error,
+    });
+  }
+};
+
+const deleteProductById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.productId;
+
+    const result = await ProductServices.deleteProduct(id);
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully!",
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message:
+        error.issues[0].message ||
+        "Cannot delete product, something went wrong",
       error: error,
     });
   }

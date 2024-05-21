@@ -16,7 +16,14 @@ const createNewProduct = async (product: TProduct) => {
 };
 
 const updateExistingProduct = async (id: string, product: TProduct) => {
-  const response = await Product.updateOne({ _id: id, product });
+  const response = await Product.findOneAndUpdate({ _id: id }, product, {
+    new: true,
+  });
+  return response;
+};
+
+const deleteProduct = async (id: string) => {
+  const response = await Product.deleteOne({ _id: id });
   return response;
 };
 
@@ -25,4 +32,5 @@ export const ProductServices = {
   createNewProduct,
   getProductById,
   updateExistingProduct,
+  deleteProduct,
 };
