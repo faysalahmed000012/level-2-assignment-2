@@ -48,6 +48,13 @@ OrderSchema.post("save", async function (doc, next) {
     { $inc: { "inventory.quantity": -doc.quantity } },
     { new: true }
   );
+  if (updateProduct?.inventory.quantity === 0) {
+    const updateInStock = await Product.findOneAndUpdate(
+      { _id: doc.productId },
+      { "inventory.inStock": false },
+      { new: true }
+    );
+  }
   next();
 });
 

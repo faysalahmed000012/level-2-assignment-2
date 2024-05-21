@@ -1,31 +1,23 @@
 import { Request, Response } from "express";
-import { ProductServices } from "../product/product.services";
 import { OrderServices } from "./order.services";
 import OrderValidation from "./order.zod.validation";
 
 const createNewOrder = async (req: Request, res: Response) => {
   try {
     const order = req.body;
-    const product = await ProductServices.getProductById(order.productId);
-    if (!product) {
-      return res.status(500).json({
-        success: false,
-        message: "sorry",
-      });
-    } else {
-      // zod validation
-      const zodValidation = OrderValidation.parse(order);
-      const response = await OrderServices.createNewOrder(zodValidation);
-      res.status(201).json({
-        success: true,
-        message: "Order created successfully",
-        data: response,
-      });
-    }
+
+    // zod validation
+    const zodValidation = OrderValidation.parse(order);
+    const response = await OrderServices.createNewOrder(zodValidation);
+    res.status(201).json({
+      success: true,
+      message: "Order created successfully",
+      data: response,
+    });
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: "Something went wrong while creating order",
+      message: error?.message ?? "Something went wrong while creating order",
       error: error,
     });
   }
@@ -50,8 +42,7 @@ const getOrders = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:
-        error.issues[0].message || "Something went wrong while creating order",
+      message: "Something went wrong while getting order",
       error: error,
     });
   }

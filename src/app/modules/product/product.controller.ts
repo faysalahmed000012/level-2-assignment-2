@@ -31,9 +31,7 @@ const getProducts = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:
-        error.issues[0].message ||
-        "Something went wrong while fetching products",
+      message: "Something went wrong while fetching products",
       error: error,
     });
   }
@@ -80,9 +78,7 @@ const addProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:
-        error.issues[0].message ||
-        "Cannot create product, something went wrong",
+      message: "Cannot create product, something went wrong",
       error: error,
     });
   }
@@ -106,9 +102,7 @@ const updateProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:
-        error.issues[0].message ||
-        "Cannot update product, something went wrong",
+      message: "Cannot update product, something went wrong",
       error: error,
     });
   }
@@ -127,9 +121,7 @@ const deleteProductById = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:
-        error.issues[0].message ||
-        "Cannot delete product, something went wrong",
+      message: "Cannot delete product, something went wrong",
       error: error,
     });
   }
