@@ -8,11 +8,18 @@ const getProducts = async (req: Request, res: Response) => {
     let response;
     if (query) {
       response = await ProductServices.getProducts(query);
-      res.status(200).json({
-        success: true,
-        message: `Products matching search term ${query} fetched successfully!`,
-        data: response,
-      });
+      if (response.length === 0) {
+        res.status(500).json({
+          success: false,
+          message: `could not find product with query ${query}`,
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: `Products matching search term ${query} fetched successfully!`,
+          data: response,
+        });
+      }
     } else {
       response = await ProductServices.getProducts();
       res.status(200).json({

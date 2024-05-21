@@ -8,10 +8,11 @@ const createNewOrder = async (order: TOrder) => {
 const getOrders = async (query: any = null) => {
   let response;
   if (query) {
-    response = await Order.find({ $text: { $search: query } });
+    response = await Order.find({ email: query });
   } else {
     response = await Order.find();
   }
+  return response;
 };
 
 export const OrderServices = {
