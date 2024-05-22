@@ -17,7 +17,7 @@ Please follow the below instructions to run different branches of this repositor
    ```sh
    cd level-2-assignment-2
    ```
-4. Run this command (Make sure typescript is installed in your computer)
+4. Run these commands (Make sure typescript is installed in your computer)
    ```sh
    npm install
    tsc
@@ -34,11 +34,10 @@ Please follow the below instructions to run different branches of this repositor
 - GET all product in `/api/products`.
 - POST a product in `/api/products`.
 - GET a product by id in `/api/products/:productId`.
-
-* Update Product `/api/products/:productId`
-
 - Do Search Operation in products based on name and description in `/api/products?searchTerm=term`.
 - DELETE a product in `/api/products/:productId`.
+
+* Update Product `/api/products/:productId`.
 
 ### Orders
 
