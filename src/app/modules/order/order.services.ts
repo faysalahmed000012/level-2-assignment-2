@@ -1,3 +1,4 @@
+import { TOrder } from "./order.interface";
 import { Order } from "./order.model";
 
 const createNewOrder = async (order: TOrder) => {

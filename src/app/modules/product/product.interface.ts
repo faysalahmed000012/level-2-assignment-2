@@ -3,7 +3,7 @@ interface TVariant {
   value: string;
 }
 
-interface TProduct {
+export interface TProduct {
   name: string;
   description: string;
   price: number;

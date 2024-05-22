@@ -1,3 +1,4 @@
+import { TProduct } from "./product.interface";
 import { Product } from "./product.model";
 
 const getProducts = async (query: any = null) => {

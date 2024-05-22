@@ -39,7 +39,7 @@ const getOrders = async (req: Request, res: Response) => {
         data: response,
       });
     }
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: "Something went wrong while getting order",
